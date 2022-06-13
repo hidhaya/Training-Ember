@@ -4,12 +4,13 @@
 <table class="table">
     <thead>
         <tr>
+            
             <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Description</th>
             <th scope="col">Price</th>
             <th scope="col">Type</th>
- 
+            {{!-- <th scope="col">checkbox</th> --}}
         </tr>
     </thead>
     <tbody>
@@ -20,7 +21,8 @@
             <td>{{product.description}}</td>
             <td>{{product.price}}</td>
             <td>{{product.type}}</td>
-            <td><button type="button">Delete</button></td>
+           <td><button type="button" onclick={{action 'delete' product}}>Delete</button></td>
+        
         </tr>
         {{/each}}
     </tbody>

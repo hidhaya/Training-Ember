@@ -1,0 +1,13 @@
+
+<div class="field">
+<label for="input">FirstName:</label>
+<input type="text"  oninput={{action "firstNameVal"}}>
+
+<label for="input">LastName:</label>
+<input type="text"  oninput={{action "lastNameVal"}}>
+
+</div>
+
+
+<button class="button" type="button" onclick={{action 'onFillBtn'}}>Fill</button>
+<button  class="button" type="button" disabled={{isValid}} >Submit</button>
