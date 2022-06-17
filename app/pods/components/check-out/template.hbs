@@ -1,0 +1,19 @@
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">NAME</th>
+      <th scope="col">PRICE</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each checkedProducts as |checkedProduct|}}
+      <tr>
+        <td>{{checkedProduct.name}}</td>
+        <td>{{checkedProduct.price}}</td>
+      </tr>
+    {{/each}}
+
+    <tr>TOTAL:{{totalPrice}}</tr>
+
+  </tbody>
+</table>

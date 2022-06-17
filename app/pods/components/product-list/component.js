@@ -1,60 +1,101 @@
 import Component from "@ember/component";
-import {inject as service} from '@ember/service';
-const products = [
+import { inject as service } from "@ember/service";
+const productList = [
   {
-    name: "Samsung",
-    description: "Smart LED ",
-    price: " 400 ",
+    name: "SAMSUNG",
+    description: "SMART LED ",
+    price: 400,
     type: "TV",
+    isChecked: false,
   },
   {
-    name: "One plus",
-    description: "black, In-built",
-    price: " 200 ",
-    type: "Mobile",
+    name: "ONE PLUS",
+    description: "BLACK, IN-BUILT",
+    price: 200,
+    type: "MOBILE",
+    isChecked: false,
   },
   {
-    name: "Whirlpool",
-    description: "Frost free",
-    price: " 400",
-    type: "Refrigerator",
+    name: "WHIRLPOOL",
+    description: "FROST FREE",
+    price: 400,
+    type: "REFRIGERATOR",
+    isChecked: false,
   },
   {
     name: "IFB",
-    description: "Fully automatic Front loading",
-    price: " 350 ",
-    type: "Washing machine",
+    description: "FULLY AUTOMATIC FRONT LOADING",
+    price: 600,
+    type: "WASHING MACHINE",
+    isChecked: false,
   },
   {
     name: "T-shirt",
-    description: "white, cotton",
-    price: " 350 ",
-    type: "Apparel",
+    description: "WHITE, COTTON",
+    price: 300,
+    type: "APPAREL",
+    isChecked: false,
   },
 ];
 
 export default Component.extend({
   store: service(),
-
+  products: null,
+  selectedProducts: null,
 
   init() {
     this._super(...arguments);
-    const storedProducts = products.map((product) => {
-      return this.store.createRecord("product", product);
+    this.set("products", []);
+    this.set("selectedProducts", []);
+    productList.forEach((product) => {
+      const list = this.store.createRecord("product", product);
+      this.get("products").pushObject(list);
     });
-    this.set("products", storedProducts);
+  },
 
-  
-  //  actions: {
-  //   // delete(product) 
+  actions: {
+    oncheckBoxRowClick(target) {
+      const value = target.value;
+      const products = this.get("products");
+      if (target.checked) {
+        const selectedProducts = products.filter((ele) => ele.name === value);
+        this.selectedProducts.pushObject(...selectedProducts);
+        let productArray = [];
+        products.forEach((product) => {
+          if (product.name === value) {
+            product.set("isChecked", true);
+          }
+          productArray.pushObject(product);
+        });
+        this.set("products", productArray);
+        return;
+      }
 
-  //   //  const productDetails = this.get('products');
-  //   //  console.log(productDetails);
-  //   //  productDetails.removeObject(product);
-  //   // console.log(productDetails);
-  //   // this.set("products", productDetails);
-    
-  // }
+      const uncheckedProduct = this.selectedProducts.filter(
+        (ele) => ele.name !== value
+      );
+      this.set("selectedProducts", uncheckedProduct);
+      let productArray = [];
+      products.forEach((product) => {
+        if (product.name === value) {
+          product.set("isChecked", false);
+        }
+      productArray.pushObject(product);
+      });
+      this.set("products", productArray);
+    },
 
-  }
+    delete(product) {
+      const nameValue = product.name;
+      const productDetails = this.get("products");
+      console.log(productDetails);
+      productDetails.removeObject(product);
+      this.set("products", productDetails);
+      const checkedProducts = this.get("selectedProducts");
+      const selectedProducts = checkedProducts.filter(
+        (ele) => ele.name === nameValue
+      );
+      this.set("selectedProducts", selectedProducts);
+    },
+  },
 });

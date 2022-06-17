@@ -6,8 +6,10 @@ const {
 } = DS;
 
 export default Model.extend({
-  name: attr('string', {defaultValue: ''}),
-  description: attr('string', {defaultValue: ''}),
-  price: attr('string', {defaultValue: ''}),
-  type: attr('string', {defaultValue: ''})
+  name: attr('string'),
+  description: attr('string'),
+  price: attr('number'),
+  type: attr('string'),
+  isChecked: attr('boolean')
+
 });
